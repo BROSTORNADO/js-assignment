@@ -29,6 +29,6 @@ const game = () => {
   const replay = prompt(`Do you wanna play again ? (yes or no) `)
   if (replay.toLowerCase() == 'yes') {
     console.clear()
-    game()
+    game()}
 }
 export default game
