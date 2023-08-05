@@ -60,11 +60,3 @@ const game = () => {
 
 game()
 
-// console.log(playRound('rock', 'rock').charAt(5))
-
-// console.log(computerPlay())
-// const userInput = prompt('Enter your name:')
-// console.log('Hello, ' + userInput)
-// Rock beats Scissors
-// Scissors beat Paper
-// Paper beats Rock
