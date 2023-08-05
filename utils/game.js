@@ -20,15 +20,17 @@ const game = () => {
   const { you, computer } = times_won
   console.log(`Score : `, you, computer)
   if (you === computer) {
-    console.log("It's a tie, no winners, just friends in a comedic standoff! 😄🤝 ")
+    console.log("It's a tie, no winners, just friends in a comedic standoff! 😄🤝")
   } else if (you > computer) {
     console.log('You rock! 🎉🏆 Victory is yours! 👑😄 ')
   } else {
     console.log('Computer wins! 🎮💻 Better luck next time! 😄🤝')
   }
   const replay = prompt(`Do you wanna play again ? (yes or no) `)
-  if (replay.toLowerCase() == 'yes') {
-    console.clear()
-    game()}
+  if (replay.toLowerCase() == 'yes'){
+  console.clear()
+  game()
+}
+    
 }
 export default game
