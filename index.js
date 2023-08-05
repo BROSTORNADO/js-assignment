@@ -34,20 +34,20 @@ const game = () => {
     you: 0,
     computer: 0,
   }
-const { you, computer } = times_won
+
   for (let i = 0; i < 5; i++) {
-    let player = prompt('Enter your choice:')
+    let player = prompt(`Round ${i + 1} : Choose Rock , Paper , Scissors`)
     let computerP = computerPlay()
     let result = playRound(player, computerP)
     if (result.charAt(4) === 'w') {
-      you += 1
-    } else if(result.charAt(4) === 'l') {
-      computer += 1
+      times_won.you += 1
+    } else if (result.charAt(4) === 'l') {
+      times_won.computer += 1
     }
     console.log(result)
   }
 
-  
+  const { you, computer } = times_won
   console.log(you, computer)
   if (you === computer) {
     console.log("it's a tie")
@@ -59,4 +59,3 @@ const { you, computer } = times_won
 }
 
 game()
-
