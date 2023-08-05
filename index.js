@@ -37,8 +37,8 @@ const game = () => {
 const { you, computer } = times_won
   for (let i = 0; i < 5; i++) {
     let player = prompt('Enter your choice:')
-    let computer = computerPlay()
-    let result = playRound(player, computer)
+    let computerP = computerPlay()
+    let result = playRound(player, computerP)
     if (result.charAt(4) === 'w') {
       you += 1
     } else if(result.charAt(4) === 'l') {
