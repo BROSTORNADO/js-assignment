@@ -6,7 +6,7 @@ const game = () => {
     computer: 0,
   }
   for (let i = 0; i < 5; i++) {
-    let player = prompt(`Round ${i + 1} : It's your turn to make a move! 😄🎮 Rock, paper, or scissors, let the hilarity commence! 🤝🤣`)
+    let player = prompt(`Round ${i + 1} : Rock, paper, or scissors, let the hilarity commence! 🤝🤣`)
     let computerP = computerPlay()
     let result = playRound(player, computerP)
     if (result.charAt(4) === 'w') {
@@ -27,6 +27,8 @@ const game = () => {
     console.log('Computer wins! 🎮💻 Better luck next time! 😄🤝')
   }
   const replay = prompt(`Do you wanna play again ? (yes or no) `)
-  if (replay.toLowerCase() == 'yes') game()
+  if (replay.toLowerCase() == 'yes') {
+    console.clear()
+    game()
 }
 export default game
