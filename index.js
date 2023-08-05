@@ -48,13 +48,13 @@ const game = () => {
   }
 
   const { you, computer } = times_won
-  console.log(you, computer)
+  console.log(`Score : `, you, computer)
   if (you === computer) {
-    console.log("it's a tie")
+    console.log("it's a tie , There is no winner !")
   } else if (you > computer) {
-    console.log('Bravo ! , you won the game ')
+    console.log('Bravo ! you won the game ')
   } else {
-    console.log('Oups ! ,computer won the game')
+    console.log('Oups ! computer won the game')
   }
 }
 
