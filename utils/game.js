@@ -6,7 +6,7 @@ const game = () => {
     computer: 0,
   }
   for (let i = 0; i < 5; i++) {
-    let player = prompt(`Round ${i + 1} : Choose Rock , Paper , Scissors`)
+    let player = prompt(`Round ${i + 1} : It's your turn to make a move! 😄🎮 Rock, paper, or scissors, let the hilarity commence! 🤝🤣`)
     let computerP = computerPlay()
     let result = playRound(player, computerP)
     if (result.charAt(4) === 'w') {
@@ -20,11 +20,11 @@ const game = () => {
   const { you, computer } = times_won
   console.log(`Score : `, you, computer)
   if (you === computer) {
-    console.log("it's a tie , There is no winner !")
+    console.log("It's a tie, no winners, just friends in a comedic standoff! 😄🤝 ")
   } else if (you > computer) {
-    console.log('Bravo ! you won the game ')
+    console.log('You rock! 🎉🏆 Victory is yours! 👑😄 ')
   } else {
-    console.log('Oups ! computer won the game')
+    console.log('Computer wins! 🎮💻 Better luck next time! 😄🤝')
   }
   const replay = prompt(`Do you wanna play again ? (yes or no) `)
   if (replay.toLowerCase() == 'yes') game()
