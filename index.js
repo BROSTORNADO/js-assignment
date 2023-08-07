@@ -17,7 +17,7 @@ function PlayerSelection(){
         wrongInput && console.log(MSGS["WRONG_INPUT"])
         selection = prompt(MSGS["PROMPT_CHOOSE"](round))
 
-        return  !selection
+        return  selection == null
             ? null
             : isValid(handlePlayerSelection(selection))
                 ? handlePlayerSelection(selection)
