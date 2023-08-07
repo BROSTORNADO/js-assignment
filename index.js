@@ -1,5 +1,6 @@
 const MSGS = {
     GAME_CANCEL: "Game canceled.",
+    CONFIRM_EXITING: "Sure u want to cancel the Game?",
     WRONG_INPUT: "Be careful with your fat fingers! Please choose Rock, Paper, or Scissors.",
     PROMPT_CHOOSE: (round) => `Round ${round}: Choose Rock, Paper, or Scissors`
 }
@@ -15,10 +16,8 @@ function PlayerSelection(){
     function get(round, wrongInput = false){
         wrongInput && console.log(MSGS["WRONG_INPUT"])
         selection = prompt(MSGS["PROMPT_CHOOSE"](round))
-        const isCancel = !selection;
-        isCancel && console.log(MSGS["GAME_CANCEL"]);
 
-        return  isCancel
+        return  selection == null
             ? null
             : isValid(handlePlayerSelection(selection))
                 ? handlePlayerSelection(selection)
@@ -112,16 +111,22 @@ const game = () => {
     displayWelcomeMessage();
     let playAgain = true;
 
-    while (playAgain) {
+    outer: while (playAgain) {
         let playerScore = 0;
         let computerScore = 0;
 
         for (let round = 1; round <= 5; round++) {
             let playerSelection = PlayerSelection().get(round)
 
-            if (!playerSelection) {
-                playAgain = false;
-                break;
+            if (!playerSelection ){
+                if(confirm(MSGS["CONFIRM_EXITING"])){
+                    console.log(MSGS["GAME_CANCEL"]);
+                    break outer;
+                }
+                else {
+                    round--;
+                    continue;
+                }
             }
 
             const computerSelection = computerPlay();
