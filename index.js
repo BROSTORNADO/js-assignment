@@ -1,3 +1,52 @@
+const MSGS = {
+    GAME_CANCEL: "Game canceled.",
+    WRONG_INPUT: "Be careful with your fat fingers! Please choose Rock, Paper, or Scissors.",
+    PROMPT_CHOOSE: (round) => `Round ${round}: Choose Rock, Paper, or Scissors`
+}
+
+function PlayerSelection(){
+    const handlePlayerSelection = compose(lower, trim);
+    let selection;
+
+    return {get}
+
+    //***/
+
+    function get(round, wrongInput = false){
+        wrongInput && console.log(MSGS["WRONG_INPUT"])
+        selection = prompt(MSGS["PROMPT_CHOOSE"](round))
+        const isCancel = !selection;
+        isCancel && console.log(MSGS["GAME_CANCEL"]);
+
+        return  isCancel
+            ? null
+            : isValid(handlePlayerSelection(selection))
+                ? handlePlayerSelection(selection)
+                : get(round, wrongInput = true)
+    }
+
+
+    function isValid(selection){
+        const validSelections = ["rock", "paper", "scissors"];
+        return validSelections.some(eqls(selection))
+    }
+    function eqls(x){
+        return (y) => {
+            return Object.is(x, y)
+        }
+    }
+    function trim(str){
+        return str.trim();
+    }
+
+    function lower(str){
+        return str.toLowerCase();
+    }
+    function compose(...fns){
+        return (arg) => fns.reduceRight((result, fn) => fn(result), arg)
+    }
+}
+
 function computerPlay() {
     const options = ['Rock', 'Paper', 'Scissors'];
     return options[Math.floor(Math.random() * options.length)];
@@ -34,27 +83,8 @@ function displayWelcomeMessage() {
     alert("Here's how it works:\n\nRock beats Scissors\nScissors beats Paper\nPaper beats Rock\n\nLet's Go!");
 }
 
-function getPlayerSelection(round) {
-    let validSelection = false;
-    let playerSelection;
 
-    while (!validSelection) {
-        playerSelection = prompt(`Round ${round}: Choose Rock, Paper, or Scissors`);
 
-        if (playerSelection === null) {
-            console.log('Game canceled.');
-            return null;  // Handle player canceling the game
-        }
-
-        if (["rock", "paper", "scissors"].includes(playerSelection.toLowerCase())) {
-            validSelection = true;
-        } else {
-            console.log("Be careful with your fat fingers! Please choose Rock, Paper, or Scissors.");
-        }
-    }
-
-    return playerSelection;
-}
 
 function determineWinner(playerScore, computerScore) {
     if (playerScore > computerScore) {
@@ -87,9 +117,9 @@ const game = () => {
         let computerScore = 0;
 
         for (let round = 1; round <= 5; round++) {
-            let playerSelection = getPlayerSelection(round);
+            let playerSelection = PlayerSelection().get(round)
 
-            if (playerSelection === null) {
+            if (!playerSelection) {
                 playAgain = false;
                 break;
             }
@@ -128,5 +158,7 @@ const game = () => {
         console.clear();
     }
 };
+
+
 
 game();
