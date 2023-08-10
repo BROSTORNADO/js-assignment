@@ -1,8 +1,10 @@
+// Generates a random selection for the computer among Rock, Paper, and Scissors
 function computerPlay() {
     const options = ['Rock', 'Paper', 'Scissors'];
     return options[Math.floor(Math.random() * options.length)];
 }
 
+// Determines the winner of a round based on player and computer selections
 function playRound(playerSelection, computerSelection) {
     const formattedPlayerSelection = playerSelection.toLowerCase();
     const formattedComputerSelection = computerSelection.toLowerCase();
@@ -29,11 +31,13 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+// Displays a welcome message to the player
 function displayWelcomeMessage() {
     alert("WELCOME TO ROCK, PAPER, SCISSORS!\n\nThe best classic game!\n\nPlease first press F12 to open your console");
     alert("Here's how it works:\n\nRock beats Scissors\nScissors beats Paper\nPaper beats Rock\n\nLet's Go!");
 }
 
+// Prompts the player to make a valid selection (Rock, Paper, or Scissors) for a round
 function getPlayerSelection(round) {
     let validSelection = false;
     let playerSelection;
@@ -56,6 +60,7 @@ function getPlayerSelection(round) {
     return playerSelection;
 }
 
+// Determines the winner of the game based on player and computer scores
 function determineWinner(playerScore, computerScore) {
     if (playerScore > computerScore) {
         return "You are unstoppable! You won this game!";
@@ -66,6 +71,7 @@ function determineWinner(playerScore, computerScore) {
     }
 }
 
+// Prompts the player whether they want to play again based on their score
 function promptPlayAgain(playerScore, computerScore) {
     if (playerScore > computerScore) {
         return prompt("Congrats! You are so good, but you think you can win again? (yes or no)");
@@ -74,10 +80,12 @@ function promptPlayAgain(playerScore, computerScore) {
     }
 }
 
+// Prompts the player to confirm if they are a chicken
 function promptChickenConfirmation() {
     return prompt("So you are a chicken? (yes or no)");
 }
 
+// Main game function (gameplay)
 const game = () => {
     displayWelcomeMessage();
     let playAgain = true;
@@ -129,4 +137,5 @@ const game = () => {
     }
 };
 
+// Start the game
 game();
