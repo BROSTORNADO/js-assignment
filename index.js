@@ -1,10 +1,61 @@
-// Generates a random selection for the computer among Rock, Paper, and Scissors
+// Messages and constants
+const MSGS = {
+    GAME_CANCEL: "Game canceled.",
+    CONFIRM_EXITING: "Sure u want to cancel the Game?",
+    WRONG_INPUT: "Be careful with your fat fingers! Please choose Rock, Paper, or Scissors.",
+    PROMPT_CHOOSE: (round) => `Round ${round}: Choose Rock, Paper, or Scissors`
+}
+
+// Player selection logic
+function PlayerSelection() {
+    const handlePlayerSelection = compose(lower, trim);
+    let selection;
+
+    return { get }
+
+    // Utility functions
+    function get(round, wrongInput = false) {
+        wrongInput && console.log(MSGS["WRONG_INPUT"])
+        selection = prompt(MSGS["PROMPT_CHOOSE"](round))
+
+        return selection == null
+            ? null
+            : isValid(handlePlayerSelection(selection))
+                ? handlePlayerSelection(selection)
+                : get(round, wrongInput = true)
+    }
+
+    function isValid(selection) {
+        const validSelections = ["rock", "paper", "scissors"];
+        return validSelections.some(eqls(selection))
+    }
+
+    function eqls(x) {
+        return (y) => {
+            return Object.is(x, y)
+        }
+    }
+
+    function trim(str) {
+        return str.trim();
+    }
+
+    function lower(str) {
+        return str.toLowerCase();
+    }
+
+    function compose(...fns) {
+        return (arg) => fns.reduceRight((result, fn) => fn(result), arg)
+    }
+}
+
+// Generates a random selection for the computer
 function computerPlay() {
     const options = ['Rock', 'Paper', 'Scissors'];
     return options[Math.floor(Math.random() * options.length)];
 }
 
-// Determines the winner of a round based on player and computer selections
+// Determines the winner of a round
 function playRound(playerSelection, computerSelection) {
     const formattedPlayerSelection = playerSelection.toLowerCase();
     const formattedComputerSelection = computerSelection.toLowerCase();
@@ -37,30 +88,7 @@ function displayWelcomeMessage() {
     alert("Here's how it works:\n\nRock beats Scissors\nScissors beats Paper\nPaper beats Rock\n\nLet's Go!");
 }
 
-// Prompts the player to make a valid selection (Rock, Paper, or Scissors) for a round
-function getPlayerSelection(round) {
-    let validSelection = false;
-    let playerSelection;
-
-    while (!validSelection) {
-        playerSelection = prompt(`Round ${round}: Choose Rock, Paper, or Scissors`);
-
-        if (playerSelection === null) {
-            console.log('Game canceled.');
-            return null;  // Handle player canceling the game
-        }
-
-        if (["rock", "paper", "scissors"].includes(playerSelection.toLowerCase())) {
-            validSelection = true;
-        } else {
-            console.log("Be careful with your fat fingers! Please choose Rock, Paper, or Scissors.");
-        }
-    }
-
-    return playerSelection;
-}
-
-// Determines the winner of the game based on player and computer scores
+// Determines the winner of the game
 function determineWinner(playerScore, computerScore) {
     if (playerScore > computerScore) {
         return "You are unstoppable! You won this game!";
@@ -71,7 +99,7 @@ function determineWinner(playerScore, computerScore) {
     }
 }
 
-// Prompts the player whether they want to play again based on their score
+// Prompts the player whether to play again based on their score
 function promptPlayAgain(playerScore, computerScore) {
     if (playerScore > computerScore) {
         return prompt("Congrats! You are so good, but you think you can win again? (yes or no)");
@@ -85,21 +113,26 @@ function promptChickenConfirmation() {
     return prompt("So you are a chicken? (yes or no)");
 }
 
-// Main game function (gameplay)
+// Main game function (Gameplay)
 const game = () => {
     displayWelcomeMessage();
     let playAgain = true;
 
-    while (playAgain) {
+    outer: while (playAgain) {
         let playerScore = 0;
         let computerScore = 0;
 
         for (let round = 1; round <= 5; round++) {
-            let playerSelection = getPlayerSelection(round);
+            let playerSelection = PlayerSelection().get(round)
 
-            if (playerSelection === null) {
-                playAgain = false;
-                break;
+            if (!playerSelection) {
+                if (confirm(MSGS["CONFIRM_EXITING"])) {
+                    console.log(MSGS["GAME_CANCEL"]);
+                    break outer;
+                } else {
+                    round--;
+                    continue;
+                }
             }
 
             const computerSelection = computerPlay();
