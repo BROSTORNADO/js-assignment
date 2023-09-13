@@ -1,12 +1,11 @@
 // Messages and constants
 const MSGS = {
     GAME_CANCEL: "Game canceled.",
-    CONFIRM_EXITING: "Sure u want to cancel the Game?",
-    WRONG_INPUT: "Be careful with your fat fingers! Please choose Rock, Paper, or Scissors.",
+    CONFIRM_EXITING: "Sure you want to cancel the game?",
+    WRONG_INPUT: "Be careful with your input! Please choose Rock, Paper, or Scissors.",
     PROMPT_CHOOSE: (round) => `Round ${round}: Choose Rock, Paper, or Scissors`
-}
+};
 
-// Player selection logic
 function PlayerSelection() {
     const handlePlayerSelection = compose(lower, trim);
     let selection;
@@ -15,25 +14,25 @@ function PlayerSelection() {
 
     // Utility functions
     function get(round, wrongInput = false) {
-        wrongInput && console.log(MSGS["WRONG_INPUT"])
-        selection = prompt(MSGS["PROMPT_CHOOSE"](round))
+        wrongInput && console.log(MSGS["WRONG_INPUT"]);
+        selection = prompt(MSGS["PROMPT_CHOOSE"](round));
 
         return selection == null
             ? null
             : isValid(handlePlayerSelection(selection))
                 ? handlePlayerSelection(selection)
-                : get(round, wrongInput = true)
+                : get(round, wrongInput = true);
     }
 
     function isValid(selection) {
         const validSelections = ["rock", "paper", "scissors"];
-        return validSelections.some(eqls(selection))
+        return validSelections.some(eqls(selection));
     }
 
     function eqls(x) {
         return (y) => {
-            return Object.is(x, y)
-        }
+            return Object.is(x, y);
+        };
     }
 
     function trim(str) {
@@ -45,11 +44,11 @@ function PlayerSelection() {
     }
 
     function compose(...fns) {
-        return (arg) => fns.reduceRight((result, fn) => fn(result), arg)
+        return (arg) => fns.reduceRight((result, fn) => fn(result), arg);
     }
 }
 
-// Generates a random selection for the computer
+// Player selection logic
 function computerPlay() {
     const options = ['Rock', 'Paper', 'Scissors'];
     return options[Math.floor(Math.random() * options.length)];
@@ -123,7 +122,7 @@ const game = () => {
         let computerScore = 0;
 
         for (let round = 1; round <= 5; round++) {
-            let playerSelection = PlayerSelection().get(round)
+            let playerSelection = PlayerSelection().get(round);
 
             if (!playerSelection) {
                 if (confirm(MSGS["CONFIRM_EXITING"])) {
